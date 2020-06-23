@@ -1,0 +1,20 @@
+div.landing-wrapper{
+  background: url("../../assets/landing-image.png");
+  height: 100%;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+div.nav-bar{
+  justify-content: space-between;
+  button {
+    background: #56CCF2;
+    color: #000000;
+    width: 190px;
+    border-radius: 0px;
+    height: 40px;
+    font-family: 'Monteserrat', sans-serif;
+    font-size: 24px;
+  }
+}

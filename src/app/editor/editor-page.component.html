@@ -1,0 +1,47 @@
+<div class="editor-wrapper">
+  <div class="nav-bar">
+    <img src="assets/logo.svg" alt="Logo" class="nav-logo" />
+
+    <div class="nav-buttons">
+      <button mat-flat-button>
+        <img src="assets/load-icon.svg" alt="">
+      </button>
+      <button mat-flat-button>
+        <img src="assets/save-icon.svg" alt="">
+      </button>
+    </div>
+  </div>
+
+  <div class="editor-content">
+    <!-- Side menu -->
+    <div class="side-menu">
+      <mat-accordion displayMode="flat" multi="true">
+
+        <mat-expansion-panel>
+          <mat-expansion-panel-header collapsedHeight="36px" expandedHeight="36px">
+            Entitäten
+          </mat-expansion-panel-header>
+          <div class="expansion-body">
+            <span>Neue Entität</span>
+            <span>Entität löschen</span>
+            <span>Entität bearbeiten</span>
+          </div>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel>
+          <mat-expansion-panel-header collapsedHeight="36px" expandedHeight="36px">
+            Attribute
+          </mat-expansion-panel-header>
+          <div class="expansion-body">
+            <span>Neues Attribut</span>
+            <span>Attribut löschen</span>
+            <span>Attribut bearbeiten</span>
+          </div>
+        </mat-expansion-panel>
+
+      </mat-accordion>
+    </div>
+
+    <div class="graph">Graph</div>
+  </div>
+</div>

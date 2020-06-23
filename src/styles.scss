@@ -1,4 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap');
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+div.nav-bar{
+  height: 80px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px;
+  background: rgba($color: #000000, $alpha: 0.8);
+}
