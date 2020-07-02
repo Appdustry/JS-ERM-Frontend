@@ -1,0 +1,10 @@
+<svg
+  [attr.width]="textSize.x + 48"
+  [attr.height]="textSize.y * 2 + 28"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <ellipse [attr.cx]="(textSize.x + 40) / 2 + 4" [attr.cy]="textSize.y + 14" [attr.rx]="(textSize.x + 40) / 2" [attr.ry]="textSize.y + 10" fill="#273750" />
+  <text x="50%" y=50% text-anchor="middle" fill="#fff" dy=".3em" #text>{{attributeData.name}}</text>
+</svg>
+  

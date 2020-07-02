@@ -1,0 +1,21 @@
+span{
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 36px;
+  line-height: 44px;
+  color: #ffffff;
+  white-space: nowrap;
+}
+
+div.entity-wrapper{
+  background: #273750;
+  padding: 16px 50px;
+  position: absolute;
+  border-radius: 5px;
+  user-select: none;
+}
+
+div.entity-wrapper:hover{
+  cursor: grab;
+}

@@ -1,0 +1,41 @@
+.diagram-wrapper{
+  position: absolute;
+  display: block;
+  overflow: hidden;
+  z-index: 1;
+}
+.diagram-element{
+  position: absolute;
+  z-index: 0;
+}
+
+// .dragging{
+//   cursor: grabbing;
+// }
+
+.not-dragging{
+  cursor: move;
+}
+
+.diagram-element.behind{
+  z-index: -1;
+}
+
+.zoom-control{
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  padding: 10px 0px 0px 10px;
+  background: #151f2e;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  color: #fff;
+  z-index: 10;
+  span{
+    font-family: 'Montserrat';
+    font-weight: 500;
+    font-size: 1.2em;
+  }
+}

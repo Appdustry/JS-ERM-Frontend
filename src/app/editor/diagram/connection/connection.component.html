@@ -1,0 +1,16 @@
+<svg
+  [attr.width]="connectionData.containerSize.x"
+  [attr.height]="connectionData.containerSize.y"
+  (click)="onClick()"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <line
+    [attr.x1]="connectionData.lineStart.x"
+    [attr.y1]="connectionData.lineStart.y"
+    [attr.x2]="connectionData.lineEnd.x"
+    [attr.y2]="connectionData.lineEnd.y"
+    stroke="#273750"
+    stroke-width="8"
+  />
+</svg>

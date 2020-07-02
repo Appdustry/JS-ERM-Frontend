@@ -1,12 +1,12 @@
 <div class="editor-wrapper">
   <div class="nav-bar">
-    <img src="assets/logo.svg" alt="Logo" class="nav-logo" />
+    <img src="assets/logo.svg" alt="Logo" class="nav-logo" (click)="onNewAttribute()" />
 
     <div class="nav-buttons">
-      <button mat-flat-button>
+      <button mat-flat-button (click)="openFileDialog()">
         <img src="assets/load-icon.svg" alt="">
       </button>
-      <button mat-flat-button>
+      <button mat-flat-button (click)="saveFile()">
         <img src="assets/save-icon.svg" alt="">
       </button>
     </div>
@@ -14,26 +14,26 @@
 
   <div class="editor-content">
     <!-- Side menu -->
-    <div class="side-menu">
+    <div class="side-menu" #sideBar>
       <mat-accordion displayMode="flat" multi="true">
 
-        <mat-expansion-panel>
+        <mat-expansion-panel #entityExpand>
           <mat-expansion-panel-header collapsedHeight="36px" expandedHeight="36px">
             Entitäten
           </mat-expansion-panel-header>
           <div class="expansion-body">
-            <span>Neue Entität</span>
+            <span (click)="onNewEntity()">Neue Entität</span>
             <span>Entität löschen</span>
             <span>Entität bearbeiten</span>
           </div>
         </mat-expansion-panel>
 
-        <mat-expansion-panel>
+        <mat-expansion-panel [disabled]="!selected" #attributeExpand>
           <mat-expansion-panel-header collapsedHeight="36px" expandedHeight="36px">
             Attribute
           </mat-expansion-panel-header>
           <div class="expansion-body">
-            <span>Neues Attribut</span>
+            <span (click)="onNewAttribute()">Neues Attribut</span>
             <span>Attribut löschen</span>
             <span>Attribut bearbeiten</span>
           </div>
@@ -42,6 +42,10 @@
       </mat-accordion>
     </div>
 
-    <div class="graph">Graph</div>
+    <div class="graph" #viewPort>
+      <app-diagram [viewPortSize]="viewPortSize" [sideBarWidth]="sideBarWidth">
+      </app-diagram>
+    </div>
+    
   </div>
 </div>

@@ -1,0 +1,9 @@
+<h2 mat-dialog-title>Open File</h2>
+<mat-dialog-content>
+  <p>Please choose the JSON file to upload</p>
+  <input type="file" (change)="onFileChange($event)">
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-flat-button [mat-dialog-close]="{loaded: false}" cdkFocusInitial id="closeButton">Cancel</button>
+  <button mat-flat-button [mat-dialog-close]="{loaded: true, data: file}" [disabled]="!fileUploaded" id="uploadButton">Upload</button>
+</mat-dialog-actions>

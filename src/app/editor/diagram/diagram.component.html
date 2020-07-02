@@ -1,1 +1,47 @@
-<p>diagram works!</p>
+<div
+  #wrapper
+  class="diagram-wrapper"
+  [style.transform]="'scale(' + zoomLevel + ')'"
+  [style.width]="wrapperSize.x + 'px'"
+  [style.height]="wrapperSize.y + 'px'"
+  *ngIf="wrapperSize"
+  style="transform-origin: top left"
+  (mousedown)="onMouseDown($event)"
+  (mouseleave)="onMouseUp($event, true)"
+  (mouseup)="onMouseUp($event, false)"
+  (mousemove)="onMouseMoveWrapper($event)"
+  [ngClass]="{'dragging': panning, 'not-dragging': !panning}"
+>
+  <app-entity
+    [entityData]="entity"
+    appDiagramElement
+    [element]="entity"
+    class="diagram-element"
+    *ngFor="let entity of entities | async"
+  ></app-entity>
+  <app-attribute
+    appDiagramElement
+    [attributeData]="attribute"
+    [element]="attribute"
+    class="diagram-element"
+    *ngFor="let attribute of attributes | async"
+  ></app-attribute>
+  <app-connection
+    *ngFor="let connection of connections | async"
+    class="diagram-element behind"
+    [connectionData]="connection"
+    [style.top]="connection.containerStart.y + 'px'"
+    [style.left]="connection.containerStart.x + 'px'"
+  ></app-connection>
+</div>
+
+<div class="zoom-control">
+  <span>Zoom</span>
+  <mat-slider
+    thumbLabel
+    min="1"
+    max="300"
+    (input)="onZoom($event)"
+    [value]="[zoomSliederValue]"
+  ></mat-slider>
+</div>

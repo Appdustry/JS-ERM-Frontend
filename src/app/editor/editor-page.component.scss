@@ -2,11 +2,15 @@ div.editor-content {
   display: flex;
   flex-direction: row;
   background: #151f2e;
-  height: calc(100vh - 100px);
+  height: calc(100vh - 70px);
+  position: relative;
 }
 
 div.side-menu {
   width: 20%;
+  position: relative;
+  z-index: 10;
+  background-color: inherit;
 }
 
 div.graph {
@@ -81,5 +85,5 @@ mat-expansion-panel-header {
 
 .nav-bar{
   justify-content: space-between;
-  padding: 10px 15px;
+  padding: 0px 15px;
 }

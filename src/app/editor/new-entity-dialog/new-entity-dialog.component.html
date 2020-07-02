@@ -1,0 +1,28 @@
+<div>
+  <h2 mat-dialog-title>Neue Entität</h2>
+  <mat-dialog-content>
+    <mat-form-field color="accent">
+      <mat-label>Entitäten Name</mat-label>
+      <input matInput type="text" [formControl]="form" autocomplete="off"/>
+      <mat-error *ngIf="form?.invalid">Name wird benötigt</mat-error>
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button
+      mat-flat-button
+      [mat-dialog-close]="{ created: false }"
+      cdkFocusInitial
+      id="closeButton"
+    >
+      Cancel
+    </button>
+    <button
+      mat-flat-button
+      [mat-dialog-close]="{ created: true, data: form.value }"
+      [disabled]="form?.invalid"
+      id="uploadButton"
+    >
+      Erstellen
+    </button>
+  </mat-dialog-actions>
+</div>

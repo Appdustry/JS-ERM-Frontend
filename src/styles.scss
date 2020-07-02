@@ -2,14 +2,39 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap');
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;  overflow: hidden; user-select: none;}
 
 
 div.nav-bar{
-  height: 80px;
+  height: 70px;
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 10px;
+  padding: 0px 10px;
   background: rgba($color: #000000, $alpha: 0.8);
+}
+
+.selected{
+  // Styling for Entity
+  div:first-of-type{
+    box-shadow: 0px 0px 0px 4px #d39b00;
+  }
+
+  // Styling for attribute
+  ellipse{
+    stroke-width: 4px;
+    stroke: #d39b00
+  }
+}
+
+// Make forms vertical
+form{
+  mat-form-field{
+    width: 100%;
+  }
+}
+
+// Prevent scroll in dialog
+.mat-dialog-content {
+  overflow-y: hidden !important;
 }
