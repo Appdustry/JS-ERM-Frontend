@@ -27,11 +27,11 @@
     *ngFor="let attribute of attributes | async"
   ></app-attribute>
   <app-connection
-    *ngFor="let connection of connections | async"
+    *ngFor="let relation of relations | async"
     class="diagram-element behind"
-    [connectionData]="connection"
-    [style.top]="connection.containerStart.y + 'px'"
-    [style.left]="connection.containerStart.x + 'px'"
+    [connectionData]="relation"
+    [style.top]="relation.containerStart.y + 'px'"
+    [style.left]="relation.containerStart.x + 'px'"
   ></app-connection>
 </div>
 

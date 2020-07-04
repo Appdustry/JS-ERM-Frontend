@@ -13,6 +13,10 @@ export class Connection{
   lineStart = new Vector2();
   lineEnd = new Vector2();
 
+  requiredPositionStart = new Vector2();
+  requiredPositionEnd = new Vector2();
+  requiredOffset = 70;
+
   padding = 20;
 
   private _panOffset = new Vector2();
@@ -43,7 +47,9 @@ export class Connection{
       if (this.startEntity.id === entity.id){ this.startEntity = entity; }
       if (this.endEntity.id === entity.id){ this.endEntity = entity; }
     }
-    if (!this.startEntity.width || !this.endEntity.width){ return; }
+    if (!this.startEntity.width || !this.endEntity.width){
+      return;
+    }
 
     // tslint:disable-next-line: max-line-length
     const startEntityMiddle = new Vector2(this.startEntity.x + this.startEntity.width / 2, this.startEntity.y + this.startEntity.height / 2);
@@ -53,8 +59,8 @@ export class Connection{
     this.containerStart.y = (startEntityMiddle.y <= endEntityMiddle.y) ? startEntityMiddle.y - this.padding / 2 : endEntityMiddle.y - this.padding / 2;
 
 
-    this.containerEnd.x = (startEntityMiddle.x >= endEntityMiddle.x) ? startEntityMiddle.x + this.padding/2 : endEntityMiddle.x + this.padding/2;
-    this.containerEnd.y = (startEntityMiddle.y >= endEntityMiddle.y) ? startEntityMiddle.y + this.padding/2 : endEntityMiddle.y + this.padding/2;
+    this.containerEnd.x = (startEntityMiddle.x >= endEntityMiddle.x) ? startEntityMiddle.x + this.padding / 2 : endEntityMiddle.x + this.padding / 2;
+    this.containerEnd.y = (startEntityMiddle.y >= endEntityMiddle.y) ? startEntityMiddle.y + this.padding / 2 : endEntityMiddle.y + this.padding / 2;
 
     this.lineStart.x = startEntityMiddle.x - this.containerStart.x;
     this.lineStart.y = startEntityMiddle.y - this.containerStart.y;
@@ -62,9 +68,25 @@ export class Connection{
     this.lineEnd.x = endEntityMiddle.x - this.containerStart.x;
     this.lineEnd.y = endEntityMiddle.y - this.containerStart.y;
 
-    this.containerStart.x -= this._panOffset.x;
-    this.containerStart.y -= this._panOffset.y;
-    this.containerEnd.x -= this._panOffset.x;
-    this.containerEnd.y -= this._panOffset.y;
+    this.containerStart.x += this._panOffset.x;
+    this.containerStart.y += this._panOffset.y;
+    this.containerEnd.x += this._panOffset.x;
+    this.containerEnd.y += this._panOffset.y;
+
+    this.requiredPositionStart = Object.assign({}, this.lineStart);
+    this.requiredPositionEnd = Object.assign({}, this.lineEnd);
+
+    const m = new Vector2();
+    m.x = this.lineEnd.x - this.lineStart.x;
+    m.y = this.lineEnd.y - this.lineStart.y;
+
+    this.requiredPositionStart.x += m.normalized.x * this.requiredOffset;
+    this.requiredPositionStart.y += m.normalized.y * this.requiredOffset;
+
+    this.requiredPositionEnd.x -= m.normalized.x * this.requiredOffset;
+    this.requiredPositionEnd.y -= m.normalized.y * this.requiredOffset;
+
+    console.log('start', this.requiredPositionStart);
+    console.log('end', this.requiredPositionEnd);
   }
 }

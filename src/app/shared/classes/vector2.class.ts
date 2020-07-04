@@ -21,4 +21,12 @@ export class Vector2{
   scale(scale: number){
     return new Vector2(Math.round(this.x * scale), Math.round(this.y * scale));
   }
+
+  get normalized(): Vector2{
+    const returnValue = new Vector2(this.x, this.y);
+    returnValue.x /= this.length;
+    returnValue.y /= this.length;
+    console.log("lenght", returnValue.length);
+    return returnValue;
+  }
 }

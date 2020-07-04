@@ -73,7 +73,7 @@ export class EditorPageComponent implements AfterViewInit, OnInit {
     const dialogRef = this._dialog.open(OpenFileDialogComponent);
     dialogRef.afterClosed().subscribe((closeEvent) => {
       if (closeEvent.loaded){
-        this._diagramService.laodFile(closeEvent.data);
+        this._diagramService.loadFile(closeEvent.data);
       }
     });
   }

@@ -1,5 +1,6 @@
 import { Connection } from './connection.class';
 import { Vector2 } from './vector2.class';
+import { relationTypes } from './relation.class';
 
 interface ISaveAttribute{
   x: number;
@@ -20,6 +21,8 @@ interface ISaveEntity{
 interface ISaveConnection{
   startId: number;
   endId: number;
+  startType: relationTypes;
+  endType: relationTypes;
 }
 
 export class SaveFile{

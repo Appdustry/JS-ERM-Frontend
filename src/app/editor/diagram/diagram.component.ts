@@ -6,6 +6,7 @@ import { DiagramService } from './diagram.service';
 import { Observable, Subscription } from 'rxjs';
 import { Connection } from 'src/app/shared/classes/connection.class';
 import { MatSliderChange } from '@angular/material/slider';
+import { Relation } from 'src/app/shared/classes/relation.class';
 
 @Component({
   selector: 'app-diagram',
@@ -19,7 +20,7 @@ export class DiagramComponent implements OnDestroy, OnChanges {
   @Input() sideBarWidth: number;
   entities: Observable<IEntity[]>;
   attributes: Observable<IAttribute[]>;
-  connections: Observable<Connection[]>;
+  relations: Observable<Relation[]>;
   wrapperSize = this.viewPortSize;
   wrapperOffset = new Vector2();
 
@@ -40,7 +41,7 @@ export class DiagramComponent implements OnDestroy, OnChanges {
   constructor(private _diagramService: DiagramService, private _changeDectorRef: ChangeDetectorRef) {
     this.entities = _diagramService.entities;
     this.attributes = _diagramService.attributes;
-    this.connections = _diagramService.connections;
+    this.relations = _diagramService.relations;
     this._zoomSubscription = _diagramService.zoomLevel.subscribe((level) => {
       this.zoomLevel = level / 100;
       if (this.viewPortSize){

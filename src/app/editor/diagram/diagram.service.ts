@@ -6,13 +6,14 @@ import { IAttribute, INewAttribute } from 'src/app/shared/interfaces/attribute.i
 import { saveAs } from 'file-saver';
 import { Vector2 } from 'src/app/shared/classes/vector2.class';
 import { SaveFile } from 'src/app/shared/classes/saveFile.class';
+import { Relation, relationTypes } from 'src/app/shared/classes/relation.class';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DiagramService {
   entities = new BehaviorSubject<IEntity[]>([]);
-  connections = new BehaviorSubject<Connection[]>([]);
+  relations = new BehaviorSubject<Relation[]>([]);
   attributes = new BehaviorSubject<IAttribute[]>([]);
 
   updatePositionEvent = new EventEmitter<IAttribute | IEntity>();
@@ -23,12 +24,13 @@ export class DiagramService {
   viewPortClickEvent = new EventEmitter();
   panningEvent = new EventEmitter<boolean>();
   currentSelectSubject = new BehaviorSubject<IEntity | IAttribute>(null);
+  selectedEvent = new EventEmitter<IEntity | IAttribute>();
 
   private _idCounter = 0;
 
   constructor() {
     this.panOffset.subscribe((panOffset) => {
-      for (const connection of this.connections.getValue()) {
+      for (const connection of this.relations.getValue()) {
         connection.setPanOffset(panOffset);
       }
     });
@@ -73,14 +75,14 @@ export class DiagramService {
 
   addConnectionsForAttribute(attribute: IAttribute): void {
     const entity = this.entities.getValue().find((search) => search.id === attribute.entityID);
-    const connection = new Connection(attribute, entity);
-    const newArray = this.connections.getValue();
+    const connection = new Relation(attribute, entity, relationTypes.none, relationTypes.none);
+    const newArray = this.relations.getValue();
     newArray.push(connection);
-    this.connections.next(newArray);
+    this.relations.next(newArray);
   }
 
   private _updateConnection(updated: IAttribute | IEntity): void {
-    for (const connection of this.connections.getValue()) {
+    for (const connection of this.relations.getValue()) {
       if (connection.startEntity === updated || connection.endEntity === updated) {
         connection.updateConnectionData(updated);
       }
@@ -98,7 +100,7 @@ export class DiagramService {
       name: entity.name,
       x: entity.x,
       y: entity.y,
-    }
+    };
     entites.push(newEntity);
     this.entities.next(entites);
   }
@@ -115,11 +117,13 @@ export class DiagramService {
     };
     attributes.push(newAttribute);
     this.attributes.next(attributes);
-    this._addConnection(newAttribute.id, newAttribute.entityID);
+    this._addConnection(newAttribute.id, newAttribute.entityID, relationTypes.none, relationTypes.none);
   }
 
-  private _addConnection(startEntityId: number, endEntityId: number) {
-    const connections = this.connections.getValue();
+  private _addConnection(startEntityId: number, endEntityId: number, startType: relationTypes, endType: relationTypes) {
+    const connections = this.relations.getValue();
+    console.log(this.entities.getValue());
+    console.log(this.attributes.getValue());
     let startEntity = this.entities.getValue().find((search) => search.id === startEntityId);
     if (!startEntity) {
       startEntity = this.attributes.getValue().find((search) => search.id === startEntityId);
@@ -130,8 +134,10 @@ export class DiagramService {
     }
 
     if (startEntity && endEntity) {
-      connections.push(new Connection(startEntity, endEntity));
+      connections.push(new Relation(startEntity, endEntity, startType, endType));
     }
+    this.relations.next(connections);
+    console.log(this.relations.getValue());
   }
 
   serializeData() {
@@ -148,10 +154,12 @@ export class DiagramService {
 
     // Save connections
     configObject.connections = [];
-    for (const connection of this.connections.getValue()) {
+    for (const connection of this.relations.getValue()) {
       configObject.connections.push({
         startId: connection.startEntity.id,
-        endId: connection.endEntity.id
+        endId: connection.endEntity.id,
+        startType: connection.startType,
+        endType: connection.endType
       });
     }
 
@@ -171,16 +179,17 @@ export class DiagramService {
     return copy;
   }
 
-  public laodFile(file: SaveFile) {
+  public loadFile(file: SaveFile) {
     this.entities.next(file.entites);
     this.attributes.next(file.attributes);
+    this.relations.next([]);
 
     // Create connections
     const connections: Connection[] = [];
     for (const connection of file.connections) {
-      this._addConnection(connection.startId, connection.endId);
+      console.log(connection);
+      this._addConnection(connection.startId, connection.endId, connection.startType, connection.endType);
     }
-    this.connections.next(connections);
     this.panOffset.next(file.panOffset);
     this.zoomLevel.next(file.zoomLevel);
     this._idCounter = file.idCounter;

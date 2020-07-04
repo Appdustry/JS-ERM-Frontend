@@ -32,7 +32,13 @@ export class DiagramElementDirective implements AfterViewInit {
   ) {
     _renderer.listen(_elRef.nativeElement, 'mousedown', (event) => {
       this.onMouseDown(event);
+      this._diagramService.selectedEvent.emit(this.element);
     });
+    _diagramService.selectedEvent.subscribe((element: IEntity | IAttribute) => {
+      if (element.id !== this.element.id){
+        this._deselect();
+      }
+    })
     _diagramService.panOffset.subscribe((panOffset) => {
       this._panOffset = panOffset;
       if (this.element) {
@@ -55,6 +61,15 @@ export class DiagramElementDirective implements AfterViewInit {
     const zoomLevel = this._diagramService.zoomLevel.getValue() / 100;
     this._dragOffset.x = $e.clientX - this.element.x * zoomLevel;
     this._dragOffset.y = $e.clientY - this.element.y * zoomLevel;
+    this._select();
+  }
+
+  private _deselect(){
+    this.selected = false;
+    this._renderer.removeClass(this._elRef.nativeElement, 'selected');
+  }
+
+  private _select(){
     this.selected = true;
     this._diagramService.currentSelectSubject.next(this.element);
     this._renderer.addClass(this._elRef.nativeElement, 'selected');
@@ -77,8 +92,8 @@ export class DiagramElementDirective implements AfterViewInit {
   }
 
   private _updatePosition(position: IVector2) {
-    this._elRef.nativeElement.style.top = position.y - this._panOffset.y + 'px';
+    this._elRef.nativeElement.style.top = position.y + this._panOffset.y + 'px';
     this._elRef.nativeElement.style.left =
-      position.x - this._panOffset.x + 'px';
+      position.x + this._panOffset.x + 'px';
   }
 }
